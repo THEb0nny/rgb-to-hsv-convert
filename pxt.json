@@ -1,0 +1,19 @@
+{
+    "name": "rgb-to-hsv-convert",
+    "description": "",
+    "dependencies": {
+        "ev3": "*",
+        "ht-color-sensor-v2": "github:theb0nny/makecode-ev3-ht-color-sensor-v2#v1.1.0"
+    },
+    "files": [
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "ev3"
+    ],
+    "preferredEditor": "tsprj"
+}
