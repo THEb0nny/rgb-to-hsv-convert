@@ -16,5 +16,6 @@
     "supportedTargets": [
         "ev3"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "tsprj",
+    "installedVersion": "workspace:7e789f19-4274-4c9c-7cfc-da547c983edc"
 }
