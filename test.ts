@@ -29,8 +29,6 @@ function TestRGBToHSVToColor() {
         let colorRgb = colorSensor.getRGB();
         let colorWhite = colorSensor.getWhite(); // For HT
         //let colorWhite = colorRgb[0] + colorRgb[1] + colorRgb[2]; // For Lego
-        brick.clearScreen();
-        brick.showValue("R", colorRgb[0], 1); brick.showValue("G", colorRgb[1], 2); brick.showValue("B", colorRgb[2], 3); brick.showValue("W", colorWhite, 4);
         let hsv = RgbToHsv(colorRgb, colorWhite, testColorSensorRgbMax, true);
         let currentColor = HsvToColor(hsv);
         brick.showValue("color", currentColor, 8);

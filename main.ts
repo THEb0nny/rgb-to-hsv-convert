@@ -1,42 +1,7 @@
-const NORMALIZE_COLORS_RGB_TO_HSV = false;  // Нормализация значений, для hitechnic не требуется!
+let NORMALIZE_COLORS_RGB_TO_HSV = false;  // Нормализация значений, для hitechnic не требуется!
 const RGB_TO_HSV_MAX_RANGE = 255; // Диапазон 0 .. до MAX
 
 let min_w = 5; // Минимальный белый для фикса рандомных прыжков значений в RgbToHsv
-
-function SetMinW(w: number) {
-    min_w = w;
-}
-
-// Перевод RGB в HSV
-function RgbToHsv(colorsRGB: number[], colorWhite: number, rgbMax: number[], debug: boolean = false): number[] {
-    if (NORMALIZE_COLORS_RGB_TO_HSV) {
-        for (let i = 0; i < 3; i++) {
-            colorsRGB[i] = Math.round((colorsRGB[i] / rgbMax[i]) * RGB_TO_HSV_MAX_RANGE);
-            if (colorsRGB[i] > RGB_TO_HSV_MAX_RANGE) colorsRGB[i] = RGB_TO_HSV_MAX_RANGE;
-            else if (colorsRGB[i] < 0) colorsRGB[i] = 0;
-        }
-    }
-    let W = colorWhite; // Белый цвет от датчика
-    if (debug) brick.showValue("W", W, 4);
-    if (W > min_w) { // Фикс прыжков значений датчика, который направлен в пространство
-        let max = Math.max(colorsRGB[0], Math.max(colorsRGB[1], colorsRGB[2]));
-        let min = Math.min(colorsRGB[0], Math.min(colorsRGB[1], colorsRGB[2]));
-        let V = max, H = 0;
-        let S = (max == 0 ? 0 : Math.round((1 - (min / max)) * 100));
-        if (max == min) H = 0;
-        else if (max == colorsRGB[0])
-            if (colorsRGB[1] >= colorsRGB[2]) H = Math.round(60 * (colorsRGB[1] - colorsRGB[2]) / (max - min));
-            else H = Math.round(60 * (colorsRGB[1] - colorsRGB[2]) / (max - min) + 360);
-        else if (max == colorsRGB[1]) H = Math.round(60 * (colorsRGB[2] - colorsRGB[0]) / (max - min) + 120);
-        else H = Math.round(60 * (colorsRGB[0] - colorsRGB[1]) / (max - min) + 240);
-        if (debug) {
-            brick.showValue("H", H, 5);
-            brick.showValue("S", S, 6);
-            brick.showValue("V", V, 7);
-        }
-        return [H, S, V];
-    } else return [0, 0, 0];
-}
 
 // Границы
 let s_range = 40; // 50
@@ -56,6 +21,51 @@ function SetHsvToColorRanges(s_range_new: number, red_h_range_new: number, yello
     blue_h_range = blue_h_range_new;
     white_v_range = white_v_range_new;
     black_ranges = black_ranges_new;
+}
+
+function SetMinW(w: number) {
+    min_w = w;
+}
+
+function SetNormalizeConverRgbToHsv(setNorm: boolean) {
+    NORMALIZE_COLORS_RGB_TO_HSV = setNorm;
+}
+
+// Перевод RGB в HSV
+function RgbToHsv(colorsRGB: number[], colorWhite: number, rgbMax: number[], debug: boolean = false): number[] {
+    if (NORMALIZE_COLORS_RGB_TO_HSV) {
+        for (let i = 0; i < 3; i++) {
+            colorsRGB[i] = Math.round((colorsRGB[i] / rgbMax[i]) * RGB_TO_HSV_MAX_RANGE);
+            if (colorsRGB[i] > RGB_TO_HSV_MAX_RANGE) colorsRGB[i] = RGB_TO_HSV_MAX_RANGE;
+            else if (colorsRGB[i] < 0) colorsRGB[i] = 0;
+        }
+    }
+    let W = colorWhite; // Белый цвет от датчика
+    if (debug) {
+        brick.clearScreen();
+        brick.showValue("R", colorsRGB[0], 1);
+        brick.showValue("G", colorsRGB[1], 2);
+        brick.showValue("B", colorsRGB[2], 3);
+        brick.showValue("W", W, 4);
+    }
+    if (W > min_w) { // Фикс прыжков значений датчика, который направлен в пространство
+        let max = Math.max(colorsRGB[0], Math.max(colorsRGB[1], colorsRGB[2]));
+        let min = Math.min(colorsRGB[0], Math.min(colorsRGB[1], colorsRGB[2]));
+        let V = max, H = 0;
+        let S = (max == 0 ? 0 : Math.round((1 - (min / max)) * 100));
+        if (max == min) H = 0;
+        else if (max == colorsRGB[0])
+            if (colorsRGB[1] >= colorsRGB[2]) H = Math.round(60 * (colorsRGB[1] - colorsRGB[2]) / (max - min));
+            else H = Math.round(60 * (colorsRGB[1] - colorsRGB[2]) / (max - min) + 360);
+        else if (max == colorsRGB[1]) H = Math.round(60 * (colorsRGB[2] - colorsRGB[0]) / (max - min) + 120);
+        else H = Math.round(60 * (colorsRGB[0] - colorsRGB[1]) / (max - min) + 240);
+        if (debug) {
+            brick.showValue("H", H, 5);
+            brick.showValue("S", S, 6);
+            brick.showValue("V", V, 7);
+        }
+        return [H, S, V];
+    } else return [0, 0, 0];
 }
 
 // Получить из HSV цветовой код
