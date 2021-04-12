@@ -1,4 +1,3 @@
-
 // Поиск максимальных значений RGB для конвертации RGB в HSV, чтобы записать максимальные значения RGB
 function SearchSensorRgbMax(colorSensor: sensors.HiTechnicColorSensor, sensorRgbMax: number[]): number[] { // colorSensor: sensors.ColorSensor / sensors.HiTechnicColorSensor
     let btnPressed = 0;
