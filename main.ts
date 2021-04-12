@@ -1,4 +1,4 @@
- const NORMALIZE_COLORS_RGB_TO_HSV = false;  // Нормализация значений, для hitechnic не требуется!
+const NORMALIZE_COLORS_RGB_TO_HSV = false;  // Нормализация значений, для hitechnic не требуется!
 const RGB_TO_HSV_MAX_RANGE = 255; // Диапазон 0 .. до MAX
 const MIN_W = 5; // Минимальный белый для фикса рандомных прыжков значений в RgbToHsv
 
