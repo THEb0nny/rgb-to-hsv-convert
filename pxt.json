@@ -1,5 +1,6 @@
 {
     "name": "rgb_to_hsv_convert",
+    "version": "0.0.1",
     "description": "",
     "dependencies": {
         "ev3": "*",
