@@ -3,7 +3,7 @@
     "description": "",
     "dependencies": {
         "ev3": "*",
-        "ht-color-sensor-v2": "github:theb0nny/makecode-ev3-ht-color-sensor-v2#v1.1.0"
+        "ht_color_sensor_v2": "github:theb0nny/ht_color_sensor_v2#v1.1.8"
     },
     "files": [
         "main.ts",
